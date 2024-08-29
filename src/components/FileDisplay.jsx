@@ -9,17 +9,19 @@ const FileDisplay = ({ file, handleAudioReset, audioStream }) => {
       </h1>
       <div className="flex items-center mx-auto gap-2">
         <h3 className="font-semibold">Name : </h3>
-        <p>{file.name}</p>
+        <p>{file ? file.name : "Custom Audio"}</p>
       </div>
       <div className="flex justify-between items-center gap-8 ">
         <button
           onClick={handleAudioReset}
-          className="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg"
+          className="flex items-center gap-2 Btn text-red-500 border border-red-500 font-semibold py-2 px-6 hover:text-white hover:bg-red-500 rounded-lg"
         >
-          Reset
+          <p>Reset</p>
+          <i className="fa-solid fa-rotate-left"></i>
         </button>
-        <button className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg">
-          Transcribe
+        <button className="flex items-center gap-2 Btn text-blue-500 border border-blue-500 hover:text-white hover:bg-blue-500 font-semibold py-2 px-4 rounded-lg">
+          <p>Transcribe</p>
+          <i className="fa-solid fa-keyboard"></i>
         </button>
       </div>
     </main>
