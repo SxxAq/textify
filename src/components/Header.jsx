@@ -5,7 +5,7 @@ const Header = () => {
         <span className="text-blue-500 font-bold">Text</span>ify
       </h1>
       <button className="flex items-center Btn gap-2 px-4 py-2 rounded-lg">
-        <p className="text-lg font-medium tracking-wide">New</p>
+        <p className="text-lg font-medium tracking-wide text-gray-600">New</p>
         <i className="fa-solid fa-plus text-blue-500 text-lg md:text-xl ml-1"></i>
       </button>
     </header>

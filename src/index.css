@@ -25,20 +25,20 @@ h3 {
   0%,
   100% {
     transform: scale(0.2);
-    background-color: #30ffb7;
+    background-color: #29acf8;
   }
   40% {
     transform: scale(1);
-    background-color: #07deff;
+    background-color: #27aee4;
   }
   50% {
     transform: scale(1);
-    background-color: #0761ff;
+    background-color: #079cff;
   }
 }
 
 .circle {
-  @apply h-10 w-10 rounded-full bg-red-500 inline-block mx-2;
+  @apply h-8 w-8 rounded-full inline-block mx-2;
   animation: scaling 2.5s ease-in-out infinite;
 }
 
@@ -60,4 +60,10 @@ h3 {
 
 .animation-delay-800 {
   animation-delay: 0.8s;
+}
+
+@media screen and (max-width: 900px) {
+  .circle {
+    @apply h-5 w-5;
+  }
 }
