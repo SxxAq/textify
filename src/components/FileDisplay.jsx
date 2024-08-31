@@ -1,4 +1,9 @@
-const FileDisplay = ({ file, handleAudioReset, audioStream }) => {
+const FileDisplay = ({
+  file,
+  handleFormSubmission,
+  handleAudioReset,
+  audioStream,
+}) => {
   return (
     <main
       className="pb-24 flex-1 text-center p-4 gap-5 sm:gap-6 md:gap-7 flex
@@ -19,7 +24,10 @@ const FileDisplay = ({ file, handleAudioReset, audioStream }) => {
           <p>Reset</p>
           <i className="fa-solid fa-rotate-left"></i>
         </button>
-        <button className="flex items-center gap-2 Btn text-blue-500 border border-blue-500 hover:text-white hover:bg-blue-500 font-semibold py-2 px-4 rounded-lg">
+        <button
+          onClick={handleFormSubmission}
+          className="flex items-center gap-2 Btn text-blue-500 border border-blue-500 hover:text-white hover:bg-blue-500 font-semibold py-2 px-4 rounded-lg"
+        >
           <p>Transcribe</p>
           <i className="fa-solid fa-keyboard"></i>
         </button>

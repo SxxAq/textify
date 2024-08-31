@@ -26,36 +26,41 @@ const App = () => {
         new URL("./utils/whisper.worker.js", import.meta.url),
         { type: "module" }
       );
+      console.log("Worker initialized");
     }
-    const onMessageRecieved = (e) => {
+
+    const onMessageReceived = (e) => {
+      console.log("Message received from worker:", e.data);
       switch (e.data.type) {
-        case "DOWNLOADING":
+        case MessageTypes.DOWNLOADING:
           setDownloading(true);
           console.log("DOWNLOADING");
-
           break;
-        case "LOADING":
+        case MessageTypes.LOADING:
           setLoading(true);
           console.log("LOADING");
-
           break;
-        case "RESULT":
+        case MessageTypes.RESULT:
           setOutput(e.data.results);
-          console.log("DOWNLOADING");
-
+          console.log("RESULT RECEIVED", e.data.results);
           break;
-        case "INFERENCE_DONE":
+        case MessageTypes.INFERENCE_DONE:
           setFinished(true);
-          console.log("DONE");
+          console.log("INFERENCE DONE");
           break;
         default:
+          console.log("Unknown message type", e.data.type);
           break;
       }
     };
-    worker.current.addEventListener("message", onMessageRecieved);
-    return () =>
-      worker.current.removeEventListener("message", onMessageRecieved);
-  },[]);
+
+    worker.current.addEventListener("message", onMessageReceived);
+
+    return () => {
+      worker.current.removeEventListener("message", onMessageReceived);
+      console.log("Worker event listener removed");
+    };
+  }, []);
 
   const readAudio = async (file) => {
     const sampling_rate = 16000;
@@ -68,7 +73,7 @@ const App = () => {
   const handleFormSubmission = async () => {
     if (!file && !audioStream) return;
     let audio = await readAudio(file ? file : audioStream);
-    const model = "openai/whisper-tiny.en";
+    const model = "Xenova/whisper-base.en";
     worker.current.postMessage({
       type: MessageTypes.INFERENCE_REQUEST,
       audio,
@@ -85,6 +90,7 @@ const App = () => {
           <Transcribing />
         ) : isAudioAvailable ? (
           <FileDisplay
+            handleFormSubmission={handleFormSubmission}
             handleAudioReset={handleAudioReset}
             file={file}
             audioStream={audioStream}
