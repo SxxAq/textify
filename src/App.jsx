@@ -4,6 +4,7 @@ import Home from "./components/Home";
 import FileDisplay from "./components/FileDisplay";
 import Info from "./components/Info";
 import Transcribing from "./components/Transcribing";
+import { MessageTypes } from "./utils/presets";
 const App = () => {
   const [file, setFile] = useState(null);
   const [audioStream, setAudioStream] = useState(null);
@@ -51,10 +52,10 @@ const App = () => {
           break;
       }
     };
-    worker.current.addEventLisetner("message", onMessageRecieved);
+    worker.current.addEventListener("message", onMessageRecieved);
     return () =>
       worker.current.removeEventListener("message", onMessageRecieved);
-  }, []);
+  },[]);
 
   const readAudio = async (file) => {
     const sampling_rate = 16000;
@@ -64,7 +65,16 @@ const App = () => {
     const audio = decoded.getChannelData(0);
     return audio;
   };
-
+  const handleFormSubmission = async () => {
+    if (!file && !audioStream) return;
+    let audio = await readAudio(file ? file : audioStream);
+    const model = "openai/whisper-tiny.en";
+    worker.current.postMessage({
+      type: MessageTypes.INFERENCE_REQUEST,
+      audio,
+      model,
+    });
+  };
   return (
     <div className="flex flex-col mx-auto w-full ">
       <Header />
