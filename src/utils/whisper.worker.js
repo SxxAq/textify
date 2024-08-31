@@ -1,11 +1,13 @@
 import { pipeline, env } from '@xenova/transformers';
 env.allowLocalModels = false;
 env.useBrowserCache = false;
+
+// Ensure this import path is correct for your project structure
 import { MessageTypes } from "./presets";
 
 class TranscriptionPipeline {
   static task = "automatic-speech-recognition";
-  static model = "Xenova/whisper-base.en";
+  static model = "Xenova/whisper-small";
   static instance = null;
 
   static async getInstance(progress_callback = null) {
@@ -19,15 +21,14 @@ class TranscriptionPipeline {
 }
 
 self.addEventListener("message", async (e) => {
-    console.log("Message received in worker:", e.data);
-    const { type, audio } = e.data;
-    if (type === MessageTypes.INFERENCE_REQUEST) {
-      await transcribe(audio);
-    }
-  });
-  
+  console.log("Message received in worker:", e.data);
+  const { type, audio, language } = e.data;
+  if (type === MessageTypes.INFERENCE_REQUEST) {
+    await transcribe(audio, language);
+  }
+});
 
-async function transcribe(audio) {
+async function transcribe(audio, language = null) {
   sendLoadingMessage("loading");
   let pipeline;
   try {
@@ -41,7 +42,8 @@ async function transcribe(audio) {
 
   const stride_length_s = 5;
   const generationTracker = new GenerationTracker(pipeline, stride_length_s);
-  await pipeline(audio, {
+  
+  const transcriptionOptions = {
     top_k: 0,
     do_sample: false,
     chunk_length: 30,
@@ -49,7 +51,15 @@ async function transcribe(audio) {
     return_timestamps: true,
     callback_function: generationTracker.callbackFunction.bind(generationTracker),
     chunk_callback: generationTracker.chunkCallback.bind(generationTracker),
-  });
+  };
+
+  if (language) {
+    transcriptionOptions.language = language;
+  } else {
+    transcriptionOptions.task = 'transcribe';
+  }
+
+  await pipeline(audio, transcriptionOptions);
   generationTracker.sendFinalResult();
 }
 
@@ -62,24 +72,24 @@ function load_model_callback(data) {
 }
 
 function sendLoadingMessage(status) {
-    self.postMessage({
-      type: MessageTypes.LOADING,
-      status
-    });
-    console.log(`Loading message sent with status: ${status}`);
-  }
-  
-  function sendDownloadingMessage(file, progress, loaded, total) {
-    self.postMessage({
-      type: MessageTypes.DOWNLOADING,
-      file,
-      progress,
-      loaded,
-      total
-    });
-    console.log(`Downloading message sent for file ${file}, progress: ${progress}, loaded: ${loaded}, total: ${total}`);
-  }
-  
+  self.postMessage({
+    type: MessageTypes.LOADING,
+    status
+  });
+  console.log(`Loading message sent with status: ${status}`);
+}
+
+function sendDownloadingMessage(file, progress, loaded, total) {
+  self.postMessage({
+    type: MessageTypes.DOWNLOADING,
+    file,
+    progress,
+    loaded,
+    total
+  });
+  console.log(`Downloading message sent for file ${file}, progress: ${progress}, loaded: ${loaded}, total: ${total}`);
+}
+
 class GenerationTracker {
   constructor(pipeline, stride_length_s) {
     this.pipeline = pipeline;
@@ -88,6 +98,7 @@ class GenerationTracker {
     this.time_precision = pipeline.processor.feature_extractor.config.chunk_length / pipeline.model.config.max_source_positions;
     this.processed_chunks = [];
     this.callbackFunctionCounter = 0;
+    this.detectedLanguage = null;
   }
 
   sendFinalResult() {
@@ -116,7 +127,7 @@ class GenerationTracker {
 
   chunkCallback(data) {
     this.chunks.push(data);
-    const [text, { chunks }] = this.pipeline.tokenizer._decode_asr(
+    const [text, { chunks, language }] = this.pipeline.tokenizer._decode_asr(
       this.chunks,
       {
         time_precision: this.time_precision,
@@ -124,6 +135,14 @@ class GenerationTracker {
         force_full_sequence: false
       }
     );
+
+    if (language && !this.detectedLanguage) {
+      this.detectedLanguage = language;
+      self.postMessage({
+        type: MessageTypes.LANGUAGE_DETECTED,
+        language: this.detectedLanguage
+      });
+    }
 
     this.processed_chunks = chunks.map((chunk, index) => {
       return this.processChunk(chunk, index);

@@ -73,7 +73,7 @@ const App = () => {
   const handleFormSubmission = async () => {
     if (!file && !audioStream) return;
     let audio = await readAudio(file ? file : audioStream);
-    const model = "Xenova/whisper-base.en";
+    const model = "Xenova/whisper-small";
     worker.current.postMessage({
       type: MessageTypes.INFERENCE_REQUEST,
       audio,
