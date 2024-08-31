@@ -1,6 +1,6 @@
 import React from "react";
 
-const Transcribe = ({ downloading }) => {
+const Transcribing = ({ downloading }) => {
   return (
     <div className="flex flex-1 items-center flex-col justify-center gap-8 md:gap-14 mb-20 py-24">
       <div className="flex flex-col gap-4 md:gap-6">
@@ -22,4 +22,4 @@ const Transcribe = ({ downloading }) => {
   );
 };
 
-export default Transcribe;
+export default Transcribing;

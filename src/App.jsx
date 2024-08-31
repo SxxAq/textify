@@ -1,20 +1,70 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Header from "./components/Header";
 import Home from "./components/Home";
 import FileDisplay from "./components/FileDisplay";
 import Info from "./components/Info";
-import Transcribe from "./components/Transcribe";
+import Transcribing from "./components/Transcribing";
 const App = () => {
   const [file, setFile] = useState(null);
   const [audioStream, setAudioStream] = useState(null);
-  const [output, setOutput] = useState(true);
-  const [loading, setLoading] = useState(true);
+  const [output, setOutput] = useState(null);
+  const [downloading, setDownloading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [finished, setFinished] = useState(false);
   const isAudioAvailable = file || audioStream;
 
   function handleAudioReset() {
     setAudioStream(null);
     setFile(null);
   }
+
+  const worker = useRef(null);
+  useEffect(() => {
+    if (!worker.current) {
+      worker.current = new Worker(
+        new URL("./utils/whisper.worker.js", import.meta.url),
+        { type: "module" }
+      );
+    }
+    const onMessageRecieved = (e) => {
+      switch (e.data.type) {
+        case "DOWNLOADING":
+          setDownloading(true);
+          console.log("DOWNLOADING");
+
+          break;
+        case "LOADING":
+          setLoading(true);
+          console.log("LOADING");
+
+          break;
+        case "RESULT":
+          setOutput(e.data.results);
+          console.log("DOWNLOADING");
+
+          break;
+        case "INFERENCE_DONE":
+          setFinished(true);
+          console.log("DONE");
+          break;
+        default:
+          break;
+      }
+    };
+    worker.current.addEventLisetner("message", onMessageRecieved);
+    return () =>
+      worker.current.removeEventListener("message", onMessageRecieved);
+  }, []);
+
+  const readAudio = async (file) => {
+    const sampling_rate = 16000;
+    const audioCTX = new AudioContext({ sampleRate: sampling_rate });
+    const response = await file.arrayBuffer();
+    const decoded = await audioCTX.decodeAudioData(response);
+    const audio = decoded.getChannelData(0);
+    return audio;
+  };
+
   return (
     <div className="flex flex-col mx-auto w-full ">
       <Header />
@@ -22,7 +72,7 @@ const App = () => {
         {output ? (
           <Info />
         ) : loading ? (
-          <Transcribe />
+          <Transcribing />
         ) : isAudioAvailable ? (
           <FileDisplay
             handleAudioReset={handleAudioReset}

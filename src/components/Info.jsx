@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Transcription from "./Transcription";
+import Translation from "./Translation";
 
 const Info = () => {
   const [tab, setTab] = useState("transcription");
@@ -26,7 +28,9 @@ const Info = () => {
         <button
           onClick={toggleTab}
           className={`px-4 py-2 font-medium ${
-            tab === "transcription" ? "bg-blue-500 text-white duration-200" : "text-gray-500"
+            tab === "transcription"
+              ? "bg-blue-500 text-white duration-200"
+              : "text-gray-500"
           }`}
         >
           Transcription
@@ -34,12 +38,15 @@ const Info = () => {
         <button
           onClick={toggleTab}
           className={`px-4 py-2 font-medium ${
-            tab === "translation" ? "bg-blue-500 text-white duration-200" : "text-gray-500"
+            tab === "translation"
+              ? "bg-blue-500 text-white duration-200"
+              : "text-gray-500"
           }`}
         >
           Translation
         </button>
       </div>
+      {tab === "transcription" ? <Transcription /> : <Translation />}
     </main>
   );
 };

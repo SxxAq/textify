@@ -22,7 +22,7 @@ const Home = ({ setFile, setAudioStream }) => {
     // create new recording instance using stream
     const media = new MediaRecorder(tempStream, { type: mimeType });
     mediaRecorder.current = media;
-     mediaRecorder.current.start();
+    mediaRecorder.current.start();
     let localAudioChunks = [];
     mediaRecorder.current.ondataavailable = (event) => {
       if (typeof event.data === "undefined") {
@@ -58,7 +58,7 @@ const Home = ({ setFile, setAudioStream }) => {
   });
 
   return (
-    <main className="pb-24 flex-1 text-center p-4 gap-5 sm:gap-6 md:gap-7 flex flex-col justify-center">
+    <main className="pb-24 flex-1 text-center py-4 px-6 gap-5 sm:gap-6 md:gap-7 flex flex-col justify-center">
       <h1 className="font-extrabold tracking-wide text-5xl md:text-7xl text-gray-800">
         <span className="text-blue-500">Text</span>ify
       </h1>
@@ -76,12 +76,13 @@ const Home = ({ setFile, setAudioStream }) => {
       <button
         onClick={recStatus === "recording" ? stopRecording : startRecording}
         className="flex items-center text-base justify-between gap-4 mx-auto w-72 max-w-full my-4
-       bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg 
-       shadow-md hover:bg-blue-600 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400 active:bg-blue-700 duration-200"
+      Btn text-blue-400 font-semibold py-2 px-4 rounded-lg 
+       shadow-md hover:text-white hover:bg-blue-600 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400 active:bg-blue-700 duration-200"
       >
         <p>{recStatus === "inactive" ? "Record" : "Stop"}</p>
         <div className="flex items-center gap-2">
-          {duration && <p className="text-sm">{duration}s</p>}
+          {duration > 0 && <p className="text-sm">{duration}s</p>}
+
           <i className="fa-solid fa-microphone"></i>
         </div>
       </button>
@@ -101,7 +102,7 @@ const Home = ({ setFile, setAudioStream }) => {
         </label>{" "}
         a mp3 file
       </p>
-      <p className="mt-6 text-lg italic font-medium text-gray-800 bg-gradient-to-r from-blue-300 to-teal-300 text-transparent bg-clip-text">
+      <p className="mt-6 text-lg italic font-medium text-[16px] text-gray-800 bg-gradient-to-r from-blue-300 to-teal-300 text-transparent bg-clip-text">
         Free Transcribe and Translate, No Strings Attached
       </p>
     </main>
