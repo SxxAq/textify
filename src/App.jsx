@@ -85,7 +85,7 @@ const App = () => {
       <Header />
       <section className="min-h-screen flex flex-col bg-gradient-to-b from-blue-100 to-white">
         {output ? (
-          <Info />
+          <Info output={output} />
         ) : loading ? (
           <Transcribing />
         ) : isAudioAvailable ? (

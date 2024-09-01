@@ -2,9 +2,9 @@ import { useState } from "react";
 import Transcription from "./Transcription";
 import Translation from "./Translation";
 
-const Info = () => {
+const Info = (props) => {
   const [tab, setTab] = useState("transcription");
-
+  const { output } = props;
   function toggleTab() {
     if (tab === "transcription") {
       setTab("translation");
@@ -46,7 +46,11 @@ const Info = () => {
           Translation
         </button>
       </div>
-      {tab === "transcription" ? <Transcription /> : <Translation />}
+      {tab === "transcription" ? (
+        <Transcription {...props} />
+      ) : (
+        <Translation {...props} />
+      )}
     </main>
   );
 };
