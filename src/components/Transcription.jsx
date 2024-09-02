@@ -44,7 +44,7 @@ const Transcription = ({ output }) => {
 
       <div className="p-1 bg-white text-md  rounded-lg shadow-lg">
         <div className="mt-2 p-2 bg-teal-200 rounded-md shadow-inner">
-          <p className="text-gray-900 leading-relaxed text-lg font-serif whitespace-pre-wrap">
+          <p className="text-gray-900 leading-normal text-md md:text-lg font-medium font-sans whitespace-pre-wrap">
             {text}
           </p>
         </div>

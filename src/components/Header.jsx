@@ -6,8 +6,8 @@ const Header = () => {
           <span className="text-teal-600 font-bold">Text</span>ify
         </h1>
       </a>
-      <a href="/" className="flex items-center Btn gap-2 px-4 py-2 rounded-lg">
-        <p className="text-lg font-medium tracking-wide text-gray-600">New</p>
+      <a href="/" className="flex items-center border border-teal-400 Btn gap-1.5 px-2 py-1 md:px-4 md:py-2 rounded-lg">
+        <p className="md:text-lg text-md font-medium tracking-wide text-gray-700">New</p>
         <i className="fa-solid fa-plus text-teal-500 text-lg md:text-xl ml-1"></i>
       </a>
     </header>

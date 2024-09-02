@@ -15,8 +15,8 @@ const Transcribing = ({ downloading, progress }) => {
         <h1 className="font-extrabold tracking-wide text-4xl md:text-6xl text-gray-800">
           <span className="text-teal-500">Transcribing </span>
         </h1>
-        <p className="text-center">
-          {!downloading ? "warming up cylinders" : "core cylinders engaged"}
+        <p className="text-center font-bold text-teal-700">
+          {!downloading ? "Initializing systems" : "Full power activated"}
         </p>
       </div>
       {/* Progress Bar Implementation */}
