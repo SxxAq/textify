@@ -4,7 +4,7 @@ import Translation from "./Translation";
 
 const Info = (props) => {
   const [tab, setTab] = useState("transcription");
-  const { output } = props;
+
   function toggleTab() {
     if (tab === "transcription") {
       setTab("translation");
