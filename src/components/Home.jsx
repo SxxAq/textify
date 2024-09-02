@@ -60,15 +60,15 @@ const Home = ({ setFile, setAudioStream }) => {
   return (
     <main className="pb-24 flex-1 text-center py-4 px-6 gap-5 sm:gap-6 md:gap-7 flex flex-col justify-center">
       <h1 className="font-extrabold tracking-wide text-5xl md:text-7xl text-gray-800">
-        <span className="text-blue-500">Text</span>ify
+        <span className="text-teal-600">Text</span>ify
       </h1>
       <h3 className="font-medium md:text-lg text-gray-700">
         Record
-        <span className="mx-2 text-blue-500">
+        <span className="mx-2 text-teal-500">
           <i className="fa-solid fa-arrow-right"></i>
         </span>
         Transcribe
-        <span className="mx-2 text-blue-500">
+        <span className="mx-2 text-teal-500">
           <i className="fa-solid fa-arrow-right"></i>
         </span>
         Translate
@@ -76,8 +76,8 @@ const Home = ({ setFile, setAudioStream }) => {
       <button
         onClick={recStatus === "recording" ? stopRecording : startRecording}
         className="flex items-center text-base justify-between gap-4 mx-auto w-72 max-w-full my-4
-      Btn text-blue-400 font-semibold py-2 px-4 rounded-lg 
-       shadow-md hover:text-white hover:bg-blue-600 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400 active:bg-blue-700 duration-200"
+      Btn text-teal-500 font-semibold py-2 px-4 rounded-lg 
+       shadow-md hover:text-white hover:bg-teal-500 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-teal-400 active:bg-teal-700 duration-200"
       >
         <p>{recStatus === "inactive" ? "Record" : "Stop"}</p>
         <div className="flex items-center gap-2">
@@ -88,7 +88,7 @@ const Home = ({ setFile, setAudioStream }) => {
       </button>
       <p className="text-base text-gray-600">
         Or{" "}
-        <label className="text-blue-500 cursor-pointer hover:text-blue-600 duration-200">
+        <label className="text-teal-600 cursor-pointer hover:text-teal-600 duration-200">
           upload
           <input
             onChange={(e) => {
@@ -102,7 +102,7 @@ const Home = ({ setFile, setAudioStream }) => {
         </label>{" "}
         a mp3 file
       </p>
-      <p className="mt-6 text-lg italic font-medium text-[16px] text-gray-800 bg-gradient-to-r from-blue-300 to-teal-300 text-transparent bg-clip-text">
+      <p className="mt-6 text-lg italic font-medium text-[16px] text-gray-800 bg-gradient-to-r from-teal-400 to-teal-400 text-transparent bg-clip-text">
         Free Transcribe and Translate, No Strings Attached
       </p>
     </main>

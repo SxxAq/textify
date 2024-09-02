@@ -12,6 +12,7 @@ const App = () => {
   const [downloading, setDownloading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [finished, setFinished] = useState(false);
+  const [progress, setProgress] = useState(0);
   const isAudioAvailable = file || audioStream;
 
   function handleAudioReset() {
@@ -34,6 +35,7 @@ const App = () => {
       switch (e.data.type) {
         case MessageTypes.DOWNLOADING:
           setDownloading(true);
+          setProgress(e.data.progress);
           console.log("DOWNLOADING");
           break;
         case MessageTypes.LOADING:
@@ -46,6 +48,7 @@ const App = () => {
           break;
         case MessageTypes.INFERENCE_DONE:
           setFinished(true);
+          setDownloading(false);
           console.log("INFERENCE DONE");
           break;
         default:
@@ -83,11 +86,11 @@ const App = () => {
   return (
     <div className="flex flex-col mx-auto w-full ">
       <Header />
-      <section className="min-h-screen flex flex-col bg-gradient-to-b from-blue-100 to-white">
+      <section className="min-h-screen flex flex-col bg-gradient-to-b from-teal-200 to-white">
         {output ? (
           <Info output={output} />
         ) : loading ? (
-          <Transcribing />
+          <Transcribing downloading={downloading} progress={progress} />
         ) : isAudioAvailable ? (
           <FileDisplay
             handleFormSubmission={handleFormSubmission}

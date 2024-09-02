@@ -8,7 +8,7 @@ const Transcription = ({ output }) => {
     const element = document.createElement("a");
     const file = new Blob([text], { type: "text/plain" });
     element.href = URL.createObjectURL(file);
-    element.download = "transcription.txt";
+    element.download = `Textify_${new Date().getTime()}`;
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
@@ -23,25 +23,28 @@ const Transcription = ({ output }) => {
 
   return (
     <div className="mx-4 my-6">
-      <div className="p-2 bg-white text-md border rounded-lg border-blue-200 shadow-lg">
-        <div className="flex justify-between space-x-3 mb-2">
+      <div className="flex justify-end w-full">
+        <div className="flex justify-end bg-white rounded-t-lg px-2 pt-2 w-fit space-x-3">
           <button
             onClick={handleDownload}
-            className="px-2 py-1 border-2 text-slate-900 border-yellow-300 rounded-md hover:bg-yellow-300 hover:text-white transition-colors duration-200 flex items-center space-x-2 shadow-sm"
+            className="px-1 border-2 text-slate-900 border-yellow-300 rounded-md hover:bg-yellow-300 hover:text-white transition-colors duration-200 flex items-center space-x-2 shadow-sm"
             title="Download transcription"
           >
             <i className="fas fa-download text-lg"></i>
           </button>
           <button
             onClick={handleCopy}
-            className="px-2 py-1 text-slate-900 border-2  border-blue-400 rounded-md hover:bg-blue-400 hover:text-white transition-colors duration-200 flex items-center space-x-2 shadow-sm"
+            className="px-1 text-slate-900 border-2 border-teal-400 rounded-md hover:bg-teal-400 hover:text-white transition-colors duration-200 flex items-center space-x-2 shadow-sm"
             title="Copy to clipboard"
           >
             <i className={`fas ${copied ? "fa-check" : "fa-copy"} text-lg`}></i>
           </button>
         </div>
-        <div className="mt-2 p-2 bg-gray-50 rounded-md shadow-inner">
-          <p className="text-gray-800 leading-relaxed text-lg font-serif whitespace-pre-wrap">
+      </div>
+
+      <div className="p-1 bg-white text-md  rounded-lg shadow-lg">
+        <div className="mt-2 p-2 bg-teal-200 rounded-md shadow-inner">
+          <p className="text-gray-900 leading-relaxed text-lg font-serif whitespace-pre-wrap">
             {text}
           </p>
         </div>

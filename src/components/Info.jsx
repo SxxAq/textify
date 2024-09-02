@@ -15,10 +15,10 @@ const Info = (props) => {
   return (
     <main
       className="pb-24 flex-1 text-center gap-5 sm:gap-6 md:gap-7 flex
-   flex-col justify-center  w-full max-w-prose mx-auto"
+   flex-col justify-center  w-full max-w-pteal mx-auto"
     >
       <h1 className="font-extrabold whitespace-nowrap text-2xl md:text-4xl text-gray-800">
-        <span className="text-blue-500">Your </span>Transcription
+        <span className="text-teal-500">Your </span>Transcription
       </h1>
 
       <div
@@ -29,7 +29,7 @@ const Info = (props) => {
           onClick={toggleTab}
           className={`px-4 py-2 font-medium ${
             tab === "transcription"
-              ? "bg-blue-500 text-white duration-200"
+              ? "bg-teal-500 text-white duration-200"
               : "text-gray-500"
           }`}
         >
@@ -39,7 +39,7 @@ const Info = (props) => {
           onClick={toggleTab}
           className={`px-4 py-2 font-medium ${
             tab === "translation"
-              ? "bg-blue-500 text-white duration-200"
+              ? "bg-teal-500 text-white duration-200"
               : "text-gray-500"
           }`}
         >
