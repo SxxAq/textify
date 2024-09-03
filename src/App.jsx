@@ -31,7 +31,7 @@ const App = () => {
     }
 
     const onMessageReceived = (e) => {
-      console.log("Message received from worker:", e.data);
+      // console.log("Message received from worker:", e.data);
       switch (e.data.type) {
         case MessageTypes.DOWNLOADING:
           setDownloading(true);

@@ -21,7 +21,7 @@ class TranscriptionPipeline {
 }
 
 self.addEventListener("message", async (e) => {
-  console.log("Message received in worker:", e.data);
+  // console.log("Message received in worker:", e.data);
   const { type, audio, language } = e.data;
   if (type === MessageTypes.INFERENCE_REQUEST) {
     await transcribe(audio, language);

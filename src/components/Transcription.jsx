@@ -24,7 +24,7 @@ const Transcription = ({ output }) => {
   return (
     <div className="mx-4 my-6">
       <div className="flex justify-end w-full">
-        <div className="flex justify-end bg-white rounded-t-lg px-2 pt-2 w-fit space-x-3">
+        <div className="flex justify-end bg-white rounded-t-lg md:mx-4 px-2 pt-2 w-fit space-x-3">
           <button
             onClick={handleDownload}
             className="px-1 border-2 text-slate-900 border-yellow-300 rounded-md hover:bg-yellow-300 hover:text-white transition-colors duration-200 flex items-center space-x-2 shadow-sm"
@@ -42,7 +42,7 @@ const Transcription = ({ output }) => {
         </div>
       </div>
 
-      <div className="p-1 bg-white text-md  rounded-lg shadow-lg">
+      <div className="p-1 md:mx-4 bg-white text-md  rounded-lg shadow-lg">
         <div className="mt-2 p-2 bg-teal-200 rounded-md shadow-inner">
           <p className="text-gray-900 leading-normal text-md md:text-lg font-medium font-sans whitespace-pre-wrap">
             {text}

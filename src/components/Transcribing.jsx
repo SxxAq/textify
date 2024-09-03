@@ -21,7 +21,7 @@ const Transcribing = ({ downloading, progress }) => {
       </div>
       {/* Progress Bar Implementation */}
       {downloading && (
-        <div className="p-4 max-w-lg md:max-w-xl lg:max-w-2xl mx-auto">
+        <div className="px-4 pt-4 max-w-lg md:max-w-xl lg:max-w-2xl mx-auto">
           <div className="flex mb-2 items-center justify-between">
             <div>
               <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-teal-600 bg-teal-200">
@@ -40,6 +40,13 @@ const Transcribing = ({ downloading, progress }) => {
               className="rounded-full bg-teal-500"
             ></div>
           </div>
+        </div>
+      )}
+      {progress === 100 && (
+        <div className="text-center ">
+          <p className="text-teal-600 text-md font-medium animate-pulse">
+            Summarizing, please wait...
+          </p>
         </div>
       )}
     </div>
