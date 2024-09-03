@@ -86,7 +86,7 @@ const App = () => {
   return (
     <div className="flex flex-col mx-auto w-full ">
       <Header />
-      <section className="min-h-screen flex flex-col bg-gradient-to-b from-teal-200 to-white">
+      <section className="min-h-screen flex flex-col">
         {output ? (
           <Info output={output} />
         ) : loading ? (
