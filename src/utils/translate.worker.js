@@ -43,7 +43,7 @@ self.addEventListener("message", async (event) => {
       throw new Error(`Failed to translate text: ${err.message}`);
     }
 
-    console.log("Translation output:", output); // Debug: Log the output
+    // console.log("Translation output:", output); // Debug: Log the output
 
     // Check if the output is valid
     if (output && output[0] && output[0].translation_text) {

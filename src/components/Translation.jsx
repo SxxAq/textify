@@ -23,11 +23,11 @@ const Translation = ({ output }) => {
           console.log("DOWNLOADING");
           break;
         case "progress":
-          console.log("LOADING", e.data.progress);
+          // console.log("LOADING", e.data.progress);
           break;
         case "update":
           setTranslation(e.data.output);
-          console.log("RESULT RECEIVED", e.data.output);
+          // console.log("RESULT RECEIVED", e.data.output);
           break;
         case "complete":
           console.log("DONE");
