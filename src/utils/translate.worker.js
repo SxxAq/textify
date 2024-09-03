@@ -1,8 +1,9 @@
-import { pipeline } from "@xenova/transformers";
-
+import { pipeline, env } from "@xenova/transformers";
+env.allowLocalModels = false;
+env.useBrowserCache = false;
 class MyTranslationPipeline {
   static task = "translation";
-  static model = "Helsinki-NLP/opus-mt-en-de"; // Default model
+  static model = "Xenova/nllb-200-distilled-600M"; // Default model
   static instance = null;
 
   static async getInstance(progress_callback = null) {

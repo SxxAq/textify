@@ -82,61 +82,62 @@ const Translation = ({ output }) => {
   };
 
   return (
-    <div className="mx-4 my-6">
-      <div className="flex justify-end w-full">
-        <div className="flex justify-end bg-white rounded-t-lg px-2 pt-2 w-fit space-x-3">
-          <div className="relative">
-            <select
-              className="appearance-none bg-slate-100 text-slate-800 border border-gray-300 rounded-md px-3 py-2 w-32 md:w-44 focus:outline-none focus:ring-2 focus:ring-teal-500 transition duration-200 ease-in-out pr-8"
-              value={toLanguage}
-              onChange={(e) => {
-                setToLanguage(e.target.value);
-                setTranslation(null);
-                setError(null);
-              }}
-            >
-              <option value="" disabled>
-                Select language
-              </option>
-              {Object.entries(LANGUAGES).map(([key, value]) => (
-                <option value={value} key={key}>
-                  {key}
+    <div className="mx-4 md:mx-[30%] my-6">
+      <div className="p-2 bg-white text-md rounded-lg shadow-lg">
+        <div className="flex justify-center w-full">
+          <div className="flex items-center bg-white rounded-t-lg px-2 w-fit space-x-3">
+            <div className="relative">
+              <select
+                className="appearance-none bg-slate-100 text-slate-800 border border-gray-300 rounded-md p-1.5 w-24 md:w-32 focus:outline-none focus:ring-2 focus:ring-teal-500 transition duration-200 ease-in-out"
+                value={toLanguage}
+                onChange={(e) => {
+                  setToLanguage(e.target.value);
+                  setTranslation(null);
+                  setError(null);
+                }}
+              >
+                <option value="" disabled>
+                  Select language
                 </option>
-              ))}
-            </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-              <i className="fas fa-chevron-down"></i>
+                {Object.entries(LANGUAGES).map(([key, value]) => (
+                  <option value={value} key={key}>
+                    {key}
+                  </option>
+                ))}
+              </select>
+              
             </div>
+            <button
+              onClick={generateTranslation}
+              disabled={translating || !toLanguage}
+              className={`px-1 py-0.5 border text-slate-900 border-blue-300 rounded-md hover:bg-blue-300 hover:text-white transition-colors duration-200 flex items-center space-x-2 shadow-sm ${
+                translating || !toLanguage
+                  ? "opacity-50 cursor-not-allowed"
+                  : ""
+              }`}
+              title="Translate"
+            >
+              <i className="fas fa-language text-lg"></i>
+            </button>
+            <button
+              onClick={handleDownload}
+              className=" px-1.5 py-0.5 border text-slate-900 border-yellow-300 rounded-md hover:bg-yellow-300 hover:text-white transition-colors duration-200 flex items-center space-x-2 shadow-sm"
+              title="Download transcription"
+            >
+              <i className="fas fa-download text-lg"></i>
+            </button>
+            <button
+              onClick={handleCopy}
+              className="px-1.5 py-0.5 text-slate-900 border border-teal-400 rounded-md hover:bg-teal-400 hover:text-white transition-colors duration-200 flex items-center space-x-2 shadow-sm"
+              title="Copy to clipboard"
+            >
+              <i
+                className={`fas ${copied ? "fa-check" : "fa-copy"} text-lg`}
+              ></i>
+            </button>
           </div>
-          <button
-            onClick={generateTranslation}
-            disabled={translating || !toLanguage}
-            className={`px-3 py-2 border-2 text-slate-900 border-blue-300 rounded-md hover:bg-blue-300 hover:text-white transition-colors duration-200 flex items-center space-x-2 shadow-sm ${
-              translating || !toLanguage ? "opacity-50 cursor-not-allowed" : ""
-            }`}
-            title="Translate"
-          >
-            <i className="fas fa-language text-lg"></i>
-          </button>
-          <button
-            onClick={handleDownload}
-            className="px-3 py-2 border-2 text-slate-900 border-yellow-300 rounded-md hover:bg-yellow-300 hover:text-white transition-colors duration-200 flex items-center space-x-2 shadow-sm"
-            title="Download transcription"
-          >
-            <i className="fas fa-download text-lg"></i>
-          </button>
-          <button
-            onClick={handleCopy}
-            className="px-3 py-2 text-slate-900 border-2 border-teal-400 rounded-md hover:bg-teal-400 hover:text-white transition-colors duration-200 flex items-center space-x-2 shadow-sm"
-            title="Copy to clipboard"
-          >
-            <i className={`fas ${copied ? "fa-check" : "fa-copy"} text-lg`}></i>
-          </button>
         </div>
-      </div>
-
-      <div className="p-4 bg-white text-md rounded-lg shadow-lg">
-        <div className="mt-2 p-4 bg-teal-200 rounded-md shadow-inner">
+        <div className="mt-2 p-2 md:p-4 bg-teal-200 rounded-md shadow-inner min-w-[200px] max-w-full">
           {error ? (
             <p className="text-red-600">Error: {error}</p>
           ) : (
