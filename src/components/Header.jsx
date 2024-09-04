@@ -1,7 +1,7 @@
 const Header = () => {
   return (
-    <div className="bg-slate-50">
-      <header className=" flex items-center justify-between px-4 py-2 md:px-8 mx-4 md:mx-20">
+    <div className="bg-slate-100 ">
+      <header className="flex items-center justify-between px-4 py-2 md:px-8 mx-4 md:mx-20">
         <a href="/">
           <h1 className="text-xl md:text-2xl font-medium">
             <span className="text-teal-600 font-bold">Text</span>ify
